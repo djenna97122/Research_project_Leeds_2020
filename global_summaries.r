@@ -35,23 +35,21 @@ tim=1
 ############# Get the area weighted mean on lat & long #############
 latr<-apply(lat,1,deg2rad)
 w<-apply(as.matrix(latr),2,cos)
-sat_mean<-t1
+sst_mean<-t1
 
 for (tim in 1:dim(t1)){
   vt<-tmp_array[ , ,tim]#matrix lon = rows, lat= col
   dim(vt)
   dim(lat)
-  data_mean<-apply(vt,2,mean)
+  data_mean<-apply(vt,2,mean,na.rm=TRUE)
   length(data_mean)
   data_mean
   head(vt)
-  data_mean<-weighted.mean(data_mean,w)
-  sat_mean[tim]<-data_mean-273.15
+  data_mean<-weighted.mean(as.matrix(data_mean),w,na.rm=TRUE)
+  sst_mean[tim]<-data_mean
 };
-
-dim(temps_mean_sat_deglg)
-head(temps_mean_sat_deglg)
-plot(t1,sat_mean,type='l',main="deglg.ANN.001 - surface air temperature vs time ")
+sst_mean
+plot(t1,sst_mean,type='l',main="deglg.ANN.001 - surface air temperature vs time ")
 #plot(t1,temps_mean_icecon,type='l',main="deglg.ANN.001 -ice concentration vs time ")
 
 ############# Create the new files #############
@@ -61,7 +59,7 @@ dim_new<-ncdim_def("t",units="year",vals=t1,create_dimvar=TRUE, calendar="360_da
 var<-ncvar_def("temp_mm_uo.mean",units="K",dim=dim_new) #create the variable: table with the global summaries
 nc_file<-nc_create("deglg.vn1_0.temp_mm_uo.mean.ANN.001",var) #create the ncdef files
 print(nc_file) 
-ncvar_put(nc_file,"temp_uo.mean",sat_mean) #upload the values in the table 
+ncvar_put(nc_file,"temp_uo.mean",sst_mean) #upload the values in the table 
 
 ############# Create all attributes #############
 ncatt_put(nc_file,"temp_uo.mean","missing_value",m_v$value)
