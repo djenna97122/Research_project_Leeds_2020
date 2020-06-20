@@ -2,7 +2,7 @@ install.packages("ncdf4")
 install.packages("sp")
 install.packages("raster")
 install.packages("mosaic")
-library(sp); library(raster); library(ncdf4);library(mosaic);
+library(sp); library(ncdf4);library(mosaic);
 ############# Read data #############
 setwd("/Volumes/annie/earpal/database/experiments/deglg/vn1_0/temp_mm_uo/001")
 filename<-"deglg.vn1_0.temp_mm_uo.monthly.ANN.001.nc"
