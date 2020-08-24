@@ -35,3 +35,13 @@ plot(tmp_array,type='l')
 ########### Bayesian analysis with BayesSpec #############
 results_amoc<-adaptspec(nloop=10000, nwarmup=3500,nexp_max=4, nbasis=10, x=as.numeric(tmp_array),plotting=TRUE)
 plot.ts(tmp_array,type='l',main="temi amoc")
+
+
+
+######## Bayesian analysis after smoothing ######
+results_amoc<-adaptspec(nloop=10000, nwarmup=2000,nexp_max=4, nbasis=10, x=mb,plotting=TRUE)
+
+results_amoc<-adaptspec(nloop=10000, nwarmup=2000,nexp_max=4, nbasis=10, x=reg$fitted,plotting=TRUE)
+
+
+
